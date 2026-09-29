@@ -66,6 +66,8 @@ Deployment
 Once your configurations are set up, run the following commands to deploy your infrastructure into the cloud:
 
 1. Navigate to the root directory:
+
+'''bash
 cd root
 
 2. Initialize the working directory and install required providers:
