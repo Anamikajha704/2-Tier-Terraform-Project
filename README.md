@@ -20,16 +20,16 @@ To securely store your Terraform state file, you need to set up a remote backend
 	• Set the Partition Key name to LockID and its type to String.
 2. Generate SSH Key Pairs
 Generate a public-private key pair to allow secure SSH access to your EC2 instances.
-bash
+```bash
 cd modules/key/
 ssh-keygen
-Use code with caution.
+```
 When prompted, enter a name for your key (e.g., client_key). If you use a different name, make sure to update your Terraform configuration references.
 3. Initialize your Environment Files
 Now, configure your backend variables and infrastructure properties.
 Define the Backend (root/backend.tf)
 Create or open the root/backend.tf file and paste the following block, replacing the placeholders with your actual AWS resource names:
-hcl
+```bash
 terraform {
   backend "s3" {
     bucket         = "YOUR_S3_BUCKET_NAME"
@@ -37,15 +37,20 @@ terraform {
     region         = "us-east-1"
     dynamodb_table = "YOUR_DYNAMODB_TABLE_NAME"
   }
-}
-Use code with caution.
-Define the Infrastructure Variables (root/terraform.tfvars)
+} 
+```
+
+Define the Infrastructure Variables (root/terraform.tfvars):
+
 Create a file named root/terraform.tfvars and fill in your network, database, and domain configurations:
-hcl
+
+```bash
 region                  = "us-east-1"
 project_name            = "my-cloud-app"
 vpc_cidr                = "10.0.0.0/16"
+```
 
+```bash
 # Subnet Allocations
 public_sub_1a_cidr         = ""
 public_sub_2b_cidr         = ""
@@ -53,14 +58,16 @@ private_sub_3a_cidr         = ""
 private_sub_4b_cidr         = ""
 private_sub_5a_cidr         = ""
 private_sub_6b_cidr         = ""
-
+```
 # Database Credentials
 db_username             = "db_admin"
 db_password             = "SecurePassword123!" # Use a secrets manager in production
 
+```bash
 # Domain Configuration
 certificate_domain_name = "example.com"
 additional_domain_name  = "*.example.com"
+```
 
 Deployment
 Once your configurations are set up, run the following commands to deploy your infrastructure into the cloud:
