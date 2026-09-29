@@ -63,16 +63,16 @@ additional_domain_name  = "*.example.com"
 
 Deployment
 Once your configurations are set up, run the following commands to deploy your infrastructure into the cloud:
-1. Navigate to the root directory:bash
+1. Navigate to the root directory:
 cd root
 Use code with caution.
-2. Initialize the working directory and install required providers:bash
+2. Initialize the working directory and install required providers:
 terraform init
 Use code with caution.
-3. Review the execution plan to verify exactly what resources will be built:bash
+3. Review the execution plan to verify exactly what resources will be built:
 terraform plan
 Use code with caution.
-4. Deploy the infrastructure:bash
+4. Deploy the infrastructure:
 terraform apply
 Use code with caution.
 When prompted, type yes and hit Enter to confirm the deployment.
