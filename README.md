@@ -67,16 +67,22 @@ Once your configurations are set up, run the following commands to deploy your i
 
 1. Navigate to the root directory:
 
-'''bash
+```bash
 cd root
 
 2. Initialize the working directory and install required providers:
+
+```bash
 terraform init
 
 3. Review the execution plan to verify exactly what resources will be built:
+
+```bash
 terraform plan
 
 4. Deploy the infrastructure:
+
+```bash
 terraform apply
 
 When prompted, type yes and hit Enter to confirm the deployment.
