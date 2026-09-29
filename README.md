@@ -2,13 +2,14 @@ Automated AWS Infrastructure Deployment with Terraform
 This project automates the deployment of a secure, highly available, and scalable multi-tier AWS infrastructure using Terraform. 
 It leverages a remote S3 backend with DynamoDB state locking to ensure secure collaboration.
 
-Prerequisites
+Prerequisites:
 Before you begin, ensure you have the following resources configured in your AWS Console:
 • Route 53 Hosted Zone: A public hosted zone for your domain name.
 • ACM Certificate: A valid SSL/TLS certificate issued via AWS Certificate Manager (ACM) matching your domain name.
 
 
-Setup Guide
+Step by Step Setup Guide:
+
 1. Configure the Remote Backend
 To securely store your Terraform state file, you need to set up a remote backend.
 1. Create an S3 Bucket:
@@ -63,18 +64,19 @@ additional_domain_name  = "*.example.com"
 
 Deployment
 Once your configurations are set up, run the following commands to deploy your infrastructure into the cloud:
+
 1. Navigate to the root directory:
 cd root
-Use code with caution.
+
 2. Initialize the working directory and install required providers:
 terraform init
-Use code with caution.
+
 3. Review the execution plan to verify exactly what resources will be built:
 terraform plan
-Use code with caution.
+
 4. Deploy the infrastructure:
 terraform apply
-Use code with caution.
+
 When prompted, type yes and hit Enter to confirm the deployment.
 
 Thanks alot for reading :) 
