@@ -1,6 +1,4 @@
-variable project_name {
-    description = "This is the project name"
-}
+variable project_name {}
 
 variable vpc_id {}
 

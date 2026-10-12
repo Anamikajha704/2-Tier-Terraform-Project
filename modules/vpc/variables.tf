@@ -1,9 +1,6 @@
 variable vpc {}
 
-variable project_name {
-    description = "This is the project name"
-}
-
+variable project_name {}
 variable region {}
 variable vpc_cidr {}       
 variable public_sub_1a_cidr {}
