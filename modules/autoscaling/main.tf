@@ -20,7 +20,7 @@ resource "aws_autoscaling_group" "asg_name" {
   min_size                  = var.min_size
   desired_capacity          = var.desired_cap
   health_check_grace_period = 300
-  health_check_type         = var.asg_health_check_type #ELB or default EC2
+  health_check_type         = var.asg_health_check_type 
   vpc_zone_identifier = [var.private_subnet_3a_id,var.private_subnet_4b_id]
   target_group_arns   = [var.target_group_arn]
 

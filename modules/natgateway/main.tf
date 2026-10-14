@@ -20,7 +20,6 @@ resource "aws_nat_gateway" "nat_1a" {
   tags          = { 
     Name = "${var.project_name}-nat-gw-1a" 
     }
-    depends_on = [var.igw_id]
 }
 
 #create nat gateway in public subnet 2b
@@ -30,7 +29,6 @@ resource "aws_nat_gateway" "nat_2b" {
   tags          = {
      Name = "${var.project_name}-nat-gw-2b" 
      }
-     depends_on = [var.igw_id]
 }
 
 
@@ -64,18 +62,17 @@ resource "aws_route_table_association" "private-sub-3a_route_table_association" 
   route_table_id      = aws_route_table.private-route-a.id
 }
 
+resource "aws_route_table_association" "private-sub-4b_route_table_association" {
+  subnet_id           = var.private_subnet_4b_id
+  route_table_id      = aws_route_table.private-route-b.id
+}
+
 resource "aws_route_table_association" "private-sub-5a_route_table_association" {
   subnet_id           = var.private_subnet_5a_id
   route_table_id      = aws_route_table.private-route-a.id
-}
-
-resource "aws_route_table_association" "private-sub-4b_route_table_association" {
-  subnet_id           = var.private_subnet_4b_id
-  route_table_id      = aws_route_table.private-route-b
 }
 
 resource "aws_route_table_association" "private-sub-6b_route_table_association" {
   subnet_id           = var.private_subnet_6b_id
   route_table_id      = aws_route_table.private-route-b.id
 }
-

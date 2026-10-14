@@ -22,7 +22,7 @@ resource "aws_cloudfront_distribution" "my_distribution" {
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "http-only" #instructs CloudFront to only use HTTP (Port 80) 
+      origin_protocol_policy = "http-only"  #In a production environment, this would be set to "https-only" to ensure end-to-end encryption.
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
@@ -30,7 +30,7 @@ resource "aws_cloudfront_distribution" "my_distribution" {
     allowed_methods        = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
     target_origin_id       = var.alb_domain_name
-    viewer_protocol_policy = "redirect-to-https"
+    viewer_protocol_policy = "redirect-to-https"  #forces any user trying to access the site via HTTP to securely switch to HTTPS.
 
     cache_policy_id = data.aws_cloudfront_cache_policy.optimized.id
 

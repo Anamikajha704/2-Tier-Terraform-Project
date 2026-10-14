@@ -14,11 +14,9 @@ module "vpc" {
 
 module "natgateway" {
   source = "../modules/natgateway"
-
   project_name = module.vpc.project_name
   igw_id       = module.vpc.igw_id
   vpc_id       = module.vpc.vpc_id
-
   public_subnet_1a_id  = module.vpc.public_sub_1a_id
   public_subnet_2b_id  = module.vpc.public_sub_2b_id
   private_subnet_3a_id = module.vpc.private_sub_3a_id
@@ -49,23 +47,22 @@ module "alb" {
 }
 
 #creating Auto Scaling group
-module "asg" {
-  source         = "../modules/asg"
-  project_name   = module.vpc.project_name
-  key_name       = module.key.key_name
-  client_sg_id   = module.securitygroup.client_sg_id
-  private_sub_3a_id = module.vpc.private_sub_3a_id
-  private_sub_4b_id = module.vpc.private_sub_4b_id
-  tg_arn         = module.alb.tg_arn
-
+module "autoscaling" {
+  source = "../modules/autoscaling"
+  project_name = module.vpc.project_name
+  key_name     = module.key.key_name
+  web_sg_id    = module.securitygroup.web_sg_id
+  private_subnet_3a_id = module.vpc.private_sub_3a_id
+  private_subnet_4b_id = module.vpc.private_sub_4b_id
+  target_group_arn     = module.alb.targetgroup_arn
 }
 
 # creating RDS instance
 module "rds" {
   source         = "../modules/rds"
   db_sg_id       = module.securitygroup.db_sg_id
-  private_sub_5a_id = module.vpc.private_sub_5a_id
-  private_sub_6b_id = module.vpc.private_sub_6b_id
+  private_subnet_5a_id = module.vpc.private_sub_5a_id
+  private_subnet_6b_id = module.vpc.private_sub_6b_id
   db_username    = var.db_username
   db_password    = var.db_password
 }

@@ -3,6 +3,7 @@
 
 ../modules/key/client_key
 ../modules/key/client_key.pub
+
 # Local .terraform directories
 **/.terraform/*
 .terraform/*

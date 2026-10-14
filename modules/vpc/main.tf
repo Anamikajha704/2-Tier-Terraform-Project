@@ -1,3 +1,5 @@
+data "aws_availability_zones" "available_zones" {}
+
 #vpc
 resource "aws_vpc" "vpc" {
   cidr_block           = var.vpc_cidr
@@ -19,31 +21,27 @@ tags = {
   }
 }
 
-data "aws_availability_zones" "available_zones" {}
-
 #public subnet 1a
-resource "aws_subnet" "public-sub-1a" {
+resource "aws_subnet" "public_sub_1a" {
   vpc_id                  = aws_vpc.vpc.id
   cidr_block              = var.public_sub_1a_cidr
-  availability_zone       = data.aws_availability_zones.available.names[0]
+  availability_zone       = data.aws_availability_zones.available_zones.names[0]
   map_public_ip_on_launch = true
 
   tags = {
-    Name        = "public-sub-1a"
-  
+    Name  = "public_sub_1a"
   }
 }
 
 #public subnet 2b
-resource "aws_subnet" "public-sub-2b" {
+resource "aws_subnet" "public_sub_2b" {
   vpc_id                  = aws_vpc.vpc.id
   cidr_block              = var.public_sub_2b_cidr
-  availability_zone       = data.aws_availability_zones.available.names[1]
+  availability_zone       = data.aws_availability_zones.available_zones.names[1]
   map_public_ip_on_launch = true
 
   tags = {
-    Name        = "public-sub-2b"
-  
+    Name        = "public_sub_2b"
   }
 }
 
@@ -62,14 +60,14 @@ resource "aws_route_table" "public_route_table" {
 }
 
 
-# associate public subnet public-sub-1a to public route table
-resource "aws_route_table_association" "public-sub-1a_route_table_association" {
+# associate public subnet public_sub_1a to public route table
+resource "aws_route_table_association" "public_sub_1a_route_table_association" {
   subnet_id           = aws_subnet.public_sub_1a.id
   route_table_id      = aws_route_table.public_route_table.id
 }
 
-# associate public subnet public-sub-2b to public route table
-resource "aws_route_table_association" "public-sub-2b_route_table_association" {
+# associate public subnet public_sub_2b to public route table
+resource "aws_route_table_association" "public_sub_2b_route_table_association" {
   subnet_id           = aws_subnet.public_sub_2b.id
   route_table_id      = aws_route_table.public_route_table.id
 }
@@ -82,7 +80,7 @@ resource "aws_subnet" "private_sub_3a" {
   map_public_ip_on_launch  = false
 
   tags      = {
-    Name    = "private-sub-3a"
+    Name    = "private_sub_3a"
   }
 }
 
@@ -94,7 +92,7 @@ resource "aws_subnet" "private_sub_4b" {
   map_public_ip_on_launch  = false
 
   tags      = {
-    Name    = "private-sub-4b"
+    Name    = "private_sub_4b"
   }
 }
 
@@ -106,7 +104,7 @@ resource "aws_subnet" "private_sub_5a" {
   map_public_ip_on_launch  = false
 
   tags      = {
-    Name    = "private-sub-5a"
+    Name    = "private_sub_5a"
   }
 }
 
@@ -118,7 +116,7 @@ resource "aws_subnet" "private_sub_6b" {
   map_public_ip_on_launch  = false
 
   tags      = {
-    Name    = "private-sub-6b"
+    Name    = "private_sub_6b"
   }
 }
 
