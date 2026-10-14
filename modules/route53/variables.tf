@@ -1,9 +1,0 @@
-variable hosted_zone_name{
-    default = "anamika-demo.com"
-}
-
-variable cloudfront_hosted_zone_id {}
-
-variable cloudfront_domain_name {}
-
-variable "additional_domain_name" {}

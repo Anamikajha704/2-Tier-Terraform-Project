@@ -35,7 +35,7 @@ resource "aws_security_group" "alb_sg" {
 # create security group for the web
 resource "aws_security_group" "web_sg" {
   name        = "web_sg"
-  description = "enable http/https access on port 80 for elb sg"
+  description = "enable http access on port 80 for elb sg"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -75,7 +75,7 @@ resource "aws_security_group" "db_sg" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = -1
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
