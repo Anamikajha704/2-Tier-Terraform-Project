@@ -1,6 +1,6 @@
 variable "project_name" {
   type        = string
-  description = "The name of the project used for naming and tagging resources"
+  description = "The name of the project"
 }
 
 variable "region" {

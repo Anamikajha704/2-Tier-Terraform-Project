@@ -1,3 +1,9 @@
+ # Get the certificate from AWS ACM
+data "aws_acm_certificate" "issued" {
+  domain   = var.certificate_domain_name
+  statuses = ["ISSUED"]
+}
+
 data "aws_cloudfront_cache_policy" "optimized" {
   name = "Managed-CachingOptimized"
 }
@@ -7,10 +13,12 @@ data "aws_cloudfront_origin_request_policy" "all_viewer_except_host" {
   name = "Managed-AllViewerExceptHostHeader"
 }
 
+
+
 #creating Cloudfront distribution -
 resource "aws_cloudfront_distribution" "my_distribution" {
   enabled             = true
- 
+ aliases = [var.certificate_domain_name, var.additional_domain_name]
   origin {
     domain_name = var.alb_domain_name
     origin_id   = var.alb_domain_name
@@ -46,16 +54,16 @@ resource "aws_cloudfront_distribution" "my_distribution" {
   }
 
 # If var.acm_certificate_arn is empty, use the free default. 
- # If it is provided, use the custom SSL
- viewer_certificate {
-    cloudfront_default_certificate = true
+ # viewer_certificate {
+    # cloudfront_default_certificate = true
 
-   
-     # PRODUCTION REFERENCE (Uncomment if using a custom domain + ACM)-
-    # cloudfront_default_certificate = var.acm_certificate_arn == "" ? true : false
-    # acm_certificate_arn            = var.acm_certificate_arn != "" ? var.acm_certificate_arn : null
-    # ssl_support_method             = var.acm_certificate_arn != "" ? "sni-only" : null
-    # minimum_protocol_version       = "TLSv1.2_2018"
+   # If it is provided, use the custom SSL
+     viewer_certificate {
+    acm_certificate_arn      = data.aws_acm_certificate.issued.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2018"
   }
-}
+  }
+
+
 

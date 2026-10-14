@@ -29,17 +29,12 @@ module "securitygroup" {
   vpc_id = module.vpc.vpc_id
 }
 
-# creating Key for instances
-module "key" {
-  source = "../modules/key"
-}
-
 # Creating Application Load balancer
 module "alb" {
   source = "../modules/alb"
-
   project_name         = module.vpc.project_name
   alb_sg_id            = module.securitygroup.alb_sg_id
+  ssl_certificate_arn  = module.cloudfront.certificate_arn
   public_subnet_1a_id  = module.vpc.public_sub_1a_id
   public_subnet_2b_id  = module.vpc.public_sub_2b_id
   vpc_id               = module.vpc.vpc_id
@@ -49,11 +44,11 @@ module "alb" {
 module "autoscaling" {
   source = "../modules/autoscaling"
   project_name = module.vpc.project_name
-  key_name     = module.key.key_name
   web_sg_id    = module.securitygroup.web_sg_id
-  private_subnet_3a_id = module.vpc.private_sub_3a_id
-  private_subnet_4b_id = module.vpc.private_sub_4b_id
-  target_group_arn     = module.alb.targetgroup_arn
+  private_sub_3a_id = module.vpc.private_sub_3a_id
+  private_sub_4b_id = module.vpc.private_sub_4b_id
+  targetgroup_arn   = module.alb.targetgroup_arn
+  key_name          = var.key_name
 }
 
 # creating RDS instance
@@ -76,8 +71,7 @@ module "cloudfront" {
   project_name = module.vpc.project_name
 }
 
-
-# Add record in route 53 hosted zone
+#add route 53
 module "route53" {
   source = "../modules/route53"
   cloudfront_domain_name = module.cloudfront.cloudfront_domain_name

@@ -3,11 +3,28 @@ Automated AWS Infrastructure Deployment with Terraform
 This project automates the deployment of a secure, highly available, and scalable multi-tier AWS infrastructure using Terraform. 
 It leverages a remote S3 backend with DynamoDB state locking to ensure secure collaboration.
 
+```bash
+[ User Browser ]
+│ (HTTPS via Route 53 DNS Alias)
+▼
+[ CloudFront Edge ] (SSL Terminated via ACM)
+│ (HTTP Port 80 via Secure AWS Prefix List)
+▼
+[ Public ALB ]
+│ (HTTP Port 80)
+▼
+[ EC2 Private ASG (3a/4b) ] ── (IAM Instance Profile / Systems Manager)
+│ (MySQL Port 3306)
+▼
+[ RDS MySQL Multi-AZ (5a/6b) ]
+```
+
 Prerequisites:
 
-Before you begin, ensure you have the following resources configured in your AWS Console:
-• Route 53 Hosted Zone: A public hosted zone for your domain name.
-• ACM Certificate: A valid SSL/TLS certificate issued via AWS Certificate Manager (ACM) matching your domain name.
+1. An active AWS Account with configured credentials via the AWS CLI.
+2. Terraform CLI installed locally.
+3. A public Route 53 Hosted Zone managing your custom domain.
+4. An issued ACM Certificate provisioned inside the us-east-1 region (required for CloudFront)
 
 
 Step by Step Setup Guide:
@@ -25,11 +42,13 @@ To securely store your Terraform state file, you need to set up a remote backend
 	
 2. Generate SSH Key Pairs
 Generate a public-private key pair to allow secure SSH access to your EC2 instances.
+
 ```bash
 cd modules/key/
 ssh-keygen
 ```
 When prompted, enter a name for your key (e.g., client_key). If you use a different name, make sure to update your Terraform configuration references.
+
 3. Initialize your Environment Files
 Now, configure your backend variables and infrastructure properties.
 Define the Backend (root/backend.tf)

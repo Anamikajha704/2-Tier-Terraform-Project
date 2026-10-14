@@ -33,5 +33,5 @@ output "private_sub_6b_id" {
 }
 
 output "igw_id" {
-    value = aws_internet_gateway.igw
+    value = aws_internet_gateway.igw.id
 }
